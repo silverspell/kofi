@@ -7,6 +7,14 @@ from django.template import loader
 from .forms import *
 from .models import *
 import uuid
+import hashlib
+
+
+def calculate_checksum(fname):
+    with open("uploads/" + fname, "rb") as dest:
+        im = dest.read()
+        return hashlib.md5(im).hexdigest()
+
 
 def handle_uploaded_file(f, name):
     with open("uploads/" + name, "wb+") as dest:
