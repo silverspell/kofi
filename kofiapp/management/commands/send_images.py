@@ -23,14 +23,15 @@ class Command(BaseCommand):
             try:
                 j, fileName = kofi.main(args)
                 pic.processed_image = fileName
+                tags = set()
                 for i in j["description"]["tags"]:
-                    tag = CoffeeTag(pic=pic, tag=i)
-                    tag.save()
+                    tags.add(i)
                 for i in j["categories"]:
-                    tag = CoffeeTag(pic = pic, tag = i["name"])
-                    tag.save()
+                    tags.add(i["name"])
                 for i in j["tags"]:
-                    tag = CoffeeTag(pic = pic, tag = i["name"])
+                    tags.add(i["name"])
+                for i in tags:
+                    tag = CoffeeTag(tag = i, pic = pic)
                     tag.save()
             finally:
                 pic.processed = True
