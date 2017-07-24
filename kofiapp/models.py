@@ -11,7 +11,7 @@ class Tester(models.Model):
 class CoffeePic(models.Model):
     image = models.FileField(upload_to="uploads/", null=True, blank=True)
     processed_image = models.CharField(null=True, blank=True, max_length = 255)
-    upload_date = models.DateTimeField('date_uploaded')
+    upload_date = models.DateTimeField('date_uploaded', auto_now_add=True)
     name = models.CharField(null=True, blank=True, max_length=255)
     processed = models.BooleanField(null=False, default=False)
 
@@ -19,7 +19,7 @@ class CoffeePic(models.Model):
         return self.name
 
 class CoffeeTag(models.Model):
-    tag = models.CharField(max_length = 255)
+    tag = models.CharField(max_length = 255, db_index=True)
     pic = models.ForeignKey(CoffeePic, on_delete = models.CASCADE)
 
     def __str__(self):

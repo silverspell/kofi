@@ -19,10 +19,7 @@ class CoffeePicAdmin(admin.ModelAdmin):
         return obj.processed
     def get_tags(self, obj):
         tags = CoffeeTag.objects.filter(pic = obj)
-        l = []
-        for i in tags:
-            l.append(i.tag)
-
+        l = [i.tag for i in tags]
         return l
 
 class CoffeeTagInline(admin.StackedInline):
