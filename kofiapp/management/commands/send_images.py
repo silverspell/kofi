@@ -20,15 +20,18 @@ class Command(BaseCommand):
             args["show"] = "N"
             args["log"] = "N"
             args["return"] = "Y"
-            j, fileName = kofi.main(args)
-            for i in j["description"]["tags"]:
-                tag = CoffeeTag(pic=pic, tag=i)
-                tag.save()
-            for i in j["categories"]:
-                tag = CoffeeTag(pic = pic, tag = i["name"])
-                tag.save()
-            for i in j["tags"]:
-                tag = CoffeeTag(pic = pic, tag = i["name"])
-                tag.save()
-            pic.processed = True
-            pic.save()
+            try:
+                j, fileName = kofi.main(args)
+                pic.processed_image = fileName
+                for i in j["description"]["tags"]:
+                    tag = CoffeeTag(pic=pic, tag=i)
+                    tag.save()
+                for i in j["categories"]:
+                    tag = CoffeeTag(pic = pic, tag = i["name"])
+                    tag.save()
+                for i in j["tags"]:
+                    tag = CoffeeTag(pic = pic, tag = i["name"])
+                    tag.save()
+            finally:
+                pic.processed = True
+                pic.save()
