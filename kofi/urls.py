@@ -16,8 +16,10 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from django.views.static import serve
+
 urlpatterns = [
     url(r'^k/', include('kofiapp.urls')),
     url(r'^admin/', admin.site.urls),
-
+    url(r'^uploads/(?P<path>.*)$', serve, {'document_root': "uploads/"} ),
 ]

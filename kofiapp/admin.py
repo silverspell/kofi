@@ -13,14 +13,20 @@ class CoffeePicInline(admin.StackedInline):
 
 class CoffeePicAdmin(admin.ModelAdmin):
     model = CoffeePic
-    list_display = ("name", "processed", "get_tags")
+    list_display = ("name", "processed", "image_display", "found_image", "get_tags")
     inlines = [CoffeePicInline,]
     def get_processed(self, obj):
         return obj.processed
+    def image_display(self, obj):
+        return "<a href='/{0}'><img height='50' src='/{0}'/></a>".format(obj.image.url)
+    def found_image(self, obj):
+        return "<a href='/{0}'><img height='50' src='/{0}'/></a>".format(obj.processed_image)
     def get_tags(self, obj):
         tags = CoffeeTag.objects.filter(pic = obj)
         l = [i.tag for i in tags]
         return l
+    image_display.allow_tags = True
+    found_image.allow_tags = True
 
 class CoffeeTagInline(admin.StackedInline):
     model = CoffeePic

@@ -132,7 +132,7 @@ def main(args):
     transformed = merge(t1, t2, t3, t4)
     smudged = smudge(transformed)
 
-    fname = str(uuid.uuid4()) + ".jpg"
+    fname = "uploads/" + str(uuid.uuid4()) + ".jpg"
     cv2.imwrite(fname, smudged)
     response = cognitiveRequest(fname)
     if args["log"] == "Y":
