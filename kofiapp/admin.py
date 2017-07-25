@@ -45,7 +45,16 @@ class CoffeeTagAdmin(admin.ModelAdmin):
         pics = set([i.pic.name for i in CoffeeTag.objects.filter(tag = obj.tag)])
         return [i for i in pics]
 
+class CustomerAdmin(admin.ModelAdmin):
+    model = Customer
+    list_display = ("name", "email", "premium_member", "credits")
+
+class FortuneAdmin(admin.ModelAdmin):
+    model = Fortune
+    list_display = ("customer", "date_submit", "processed")
 
 #admin.site.register(Tester)
 admin.site.register(CoffeeTag, CoffeeTagAdmin)
 admin.site.register(CoffeePic, CoffeePicAdmin)
+admin.site.register(Customer, CustomerAdmin)
+admin.site.register(Fortune, FortuneAdmin)
