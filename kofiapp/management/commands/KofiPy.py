@@ -80,11 +80,10 @@ def merge(t1, t2, t3, t4):
 
 def smudge(merged):
     """Birle�tirip beyaz alanlar� yok ediyor"""
-    ret2,th = cv2.threshold(merged, 127, 255, cv2.THRESH_OTSU)
-    h, w = th.shape[:2]
     m = merged.copy()
+    ret2,th = cv2.threshold(merged, 164, 255, cv2.THRESH_OTSU)
     whites = (th == 255)
-    copied = np.where(th < np.average(th))
+    copied = np.where(th < np.median(merged))#np.where(merged <= np.median(merged))
     m[whites] = copied[0][-1]
 
     return m
@@ -97,6 +96,7 @@ def cognitiveRequest(fname):
 
     imF = open(fname, "rb")
     f = imF.read()
+    imF.close()
     data = bytearray(f)
 
     response = requests.post(url, data=data, headers=header)
